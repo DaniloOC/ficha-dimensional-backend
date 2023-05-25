@@ -1,0 +1,44 @@
+---
+spring:
+  profiles:
+    default: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    platform: postgres
+    url: "jdbc:postgresql://localhost:5432/ficha-dimensional-db"
+    username: "p1grupo3maua"
+    password: "p1grupo3maua"
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+  datasource:
+    platform: postgres
+    url: ${CONTABIL_JDBC_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
