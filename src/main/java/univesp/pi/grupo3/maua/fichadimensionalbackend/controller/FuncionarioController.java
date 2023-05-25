@@ -15,44 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import univesp.pi.grupo3.maua.fichadimensionalbackend.model.Produto;
-import univesp.pi.grupo3.maua.fichadimensionalbackend.service.ProdutoService;
+import univesp.pi.grupo3.maua.fichadimensionalbackend.model.Funcionario;
+import univesp.pi.grupo3.maua.fichadimensionalbackend.service.FuncionarioService;
 
 @RestController
-@RequestMapping("/api/produto")
-public class ProdutoController {
+@RequestMapping("/api/funcionario")
+public class FuncionarioController {
 
     @Autowired
-    private ProdutoService service;
+    private FuncionarioService service;
 
     @GetMapping
-    public List<Produto> lista() {
+    public List<Funcionario> lista() {
         return service.listaTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> get(@PathVariable("id") Long id) {
-        Optional<Produto> produtoOpt = service.findById(id);
-        if (!produtoOpt.isPresent()) {
+    public ResponseEntity<Funcionario> get(@PathVariable("id") Long id) {
+        Optional<Funcionario> funcionarioOpt = service.findById(id);
+        if (!funcionarioOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(produtoOpt.get());
+        return ResponseEntity.status(HttpStatus.OK).body(funcionarioOpt.get());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Produto> salvar(@RequestBody Produto request) {
-        Produto produto = service.salvar(request);
-        return ResponseEntity.status(HttpStatus.OK).body(produto);
+    public ResponseEntity<Funcionario> salvar(@RequestBody Funcionario request) {
+        Funcionario funcionario = service.salvar(request);
+        return ResponseEntity.status(HttpStatus.OK).body(funcionario);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        Optional<Produto> produtoOpt = service.findById(id);
+        Optional<Funcionario> produtoOpt = service.findById(id);
         if (!produtoOpt.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionario não foi encontrado.");
         }
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Produto removido com sucesso.");
+        return ResponseEntity.status(HttpStatus.OK).body("Funcionario removido com sucesso.");
     }
 
 }

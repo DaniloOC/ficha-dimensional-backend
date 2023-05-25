@@ -15,44 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import univesp.pi.grupo3.maua.fichadimensionalbackend.model.Produto;
-import univesp.pi.grupo3.maua.fichadimensionalbackend.service.ProdutoService;
+import univesp.pi.grupo3.maua.fichadimensionalbackend.model.Setor;
+import univesp.pi.grupo3.maua.fichadimensionalbackend.service.SetorService;
 
 @RestController
-@RequestMapping("/api/produto")
-public class ProdutoController {
+@RequestMapping("/api/setor")
+public class SetorController {
 
     @Autowired
-    private ProdutoService service;
+    private SetorService service;
 
     @GetMapping
-    public List<Produto> lista() {
+    public List<Setor> lista() {
         return service.listaTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> get(@PathVariable("id") Long id) {
-        Optional<Produto> produtoOpt = service.findById(id);
-        if (!produtoOpt.isPresent()) {
+    public ResponseEntity<Setor> get(@PathVariable("id") Long id) {
+        Optional<Setor> setorOpt = service.findById(id);
+        if (!setorOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(produtoOpt.get());
+        return ResponseEntity.status(HttpStatus.OK).body(setorOpt.get());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Produto> salvar(@RequestBody Produto request) {
-        Produto produto = service.salvar(request);
-        return ResponseEntity.status(HttpStatus.OK).body(produto);
+    public ResponseEntity<Setor> salvar(@RequestBody Setor request) {
+        Setor setor = service.salvar(request);
+        return ResponseEntity.status(HttpStatus.OK).body(setor);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        Optional<Produto> produtoOpt = service.findById(id);
-        if (!produtoOpt.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado.");
+        Optional<Setor> setorOpt = service.findById(id);
+        if (!setorOpt.isPresent()) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body("Setor não foi encontrado.");
         }
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Produto removido com sucesso.");
+        return ResponseEntity.status(HttpStatus.OK).body("Setor removido com sucesso.");
     }
 
 }
